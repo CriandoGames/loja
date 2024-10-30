@@ -24,41 +24,42 @@ class _HomeStoreState extends State<HomeStore> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Products'),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.favorite_outline),
-              onPressed: () {},
-            )
-          ],
-        ),
-        body: ValueListenableBuilder<HomeStoreState>(
-          valueListenable: controller,
-          builder: (_, state, __) {
-            if (state is HomeStoreStateLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (state is HomeStoreStateInitial) {
-              return ListView.builder(
-                itemCount: state.products.length,
-                itemBuilder: (_, index) {
-                  final product = state.products[index];
-                  return Text(product.name);
-                },
-              );
-            } else if (state is HomeStoreStateEmpty) {
-              return Center(
-                child: Image.asset(ImagePath.homeEmptyImage()),
-              );
-            } else if (state is HomeStoreStateError) {
-              return Center(
-                child: Image.asset(ImagePath.homeEmptyImage()),
-              );
-            }
-            return const SizedBox();
-          },
-        ));
+      appBar: AppBar(
+        title: const Text('Products'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.favorite_outline),
+            onPressed: () {},
+          )
+        ],
+      ),
+      body: ValueListenableBuilder<HomeStoreState>(
+        valueListenable: controller,
+        builder: (_, state, __) {
+          if (state is HomeStoreStateLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state is HomeStoreStateInitial) {
+            return ListView.builder(
+              itemCount: state.products.length,
+              itemBuilder: (_, index) {
+                final product = state.products[index];
+                return Text(product.name);
+              },
+            );
+          } else if (state is HomeStoreStateEmpty) {
+            return Center(
+              child: Image.asset(ImagePath.homeEmptyImage()),
+            );
+          } else if (state is HomeStoreStateError) {
+            return Center(
+              child: Image.asset(ImagePath.homeEmptyImage()),
+            );
+          }
+          return const SizedBox();
+        },
+      ),
+    );
   }
 }
