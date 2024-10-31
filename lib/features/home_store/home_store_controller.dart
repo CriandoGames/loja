@@ -92,8 +92,10 @@ class HomeStoreController extends ValueNotifier<HomeStoreState> {
             element.name.toUpperCase().contains(name.toUpperCase()))
         .toList();
 
-    value = HomeStoreStateLoading();
-    if (filteredProducts.isEmpty) value = HomeStoreStateEmpty();
+    if (filteredProducts.isEmpty) {
+      value = HomeStoreStateEmpty();
+      return;
+    }
 
     value = HomeStoreStateInitial(products: filteredProducts);
   }
