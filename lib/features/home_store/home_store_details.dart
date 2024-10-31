@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:loja/core/shared/injector.dart';
+import 'package:loja/features/home_store/home_store_controller.dart';
 import 'package:loja/infra/model/product_model.dart';
 
-class HomeStoreDetails extends StatelessWidget {
+class HomeStoreDetails extends StatefulWidget {
   final ProductModel _product;
   const HomeStoreDetails({required ProductModel product, super.key})
       : _product = product;
 
   @override
+  State<HomeStoreDetails> createState() => _HomeStoreDetailsState();
+}
+
+class _HomeStoreDetailsState extends State<HomeStoreDetails> {
+  final controller = injector.get<HomeStoreController>();
+
+  @override
   Widget build(BuildContext context) {
+    print(controller.isFavorite(widget._product.id));
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -19,8 +29,19 @@ class HomeStoreDetails extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.favorite_outline),
-            onPressed: () {},
+            onPressed: () {
+              controller.toggleFavorite(widget._product.id);
+
+              setState(() {});
+            },
+            icon: Icon(
+              controller.isFavorite(widget._product.id)
+                  ? Icons.favorite
+                  : Icons.favorite_outline,
+              color: controller.isFavorite(widget._product.id)
+                  ? Colors.red
+                  : Colors.grey,
+            ),
           ),
         ],
       ),
@@ -31,14 +52,14 @@ class HomeStoreDetails extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.network(
-                _product.imageUrl,
+                widget._product.imageUrl,
                 width: 300,
                 height: 300,
                 fit: BoxFit.contain,
               ),
               const SizedBox(height: 16),
               Text(
-                _product.name,
+                widget._product.name,
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -56,11 +77,11 @@ class HomeStoreDetails extends StatelessWidget {
                           color: Colors.yellow[600],
                         ),
                         const SizedBox(width: 4),
-                        Text(_product.rating.rate.toString()),
+                        Text(widget._product.rating.rate.toString()),
                         const SizedBox(width: 4),
                         Flexible(
                           child: Text(
-                            "(${_product.rating.reviewCount} reviews)",
+                            "(${widget._product.rating.reviewCount} reviews)",
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                           ),
@@ -69,7 +90,7 @@ class HomeStoreDetails extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'R\$ ${_product.price.toStringAsFixed(2)}',
+                    'R\$ ${widget._product.price.toStringAsFixed(2)}',
                     style: const TextStyle(
                       fontSize: 24,
                       color: Color(0xFF5EC401),
@@ -88,7 +109,7 @@ class HomeStoreDetails extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      _product.category,
+                      widget._product.category,
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.grey[800],
@@ -110,7 +131,7 @@ class HomeStoreDetails extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      _product.description,
+                      widget._product.description,
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.grey[800],
