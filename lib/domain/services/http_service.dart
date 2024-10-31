@@ -1,4 +1,4 @@
-import '../shared/http_response.dart';
+import '../../core/shared/http_response.dart';
 
 abstract class IHttpService {
   Future<HttpResponse> get(String url,

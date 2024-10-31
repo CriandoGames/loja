@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:loja/domain/shared/injector.dart';
+import 'package:go_router/go_router.dart';
+import 'package:loja/core/shared/injector.dart';
 import 'package:loja/features/home_store/home_store_controller.dart';
 import 'package:loja/features/home_store/states/home_store_state.dart';
 
-import '../../domain/shared/image_path.dart';
+import '../../core/shared/image_path.dart';
 
 class HomeStore extends StatefulWidget {
   const HomeStore({super.key});
@@ -75,57 +76,61 @@ class _HomeStoreState extends State<HomeStore> {
                   width: size.width * 0.1,
                   child: Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Row(
-                          children: [
-                            Image.network(
-                              product.imageUrl,
-                              width: 126,
-                              height: 121,
-                            ),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(product.name),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.star,
-                                            color: Colors.yellow[600],
-                                          ),
-                                          const SizedBox(width: 4),
-                                          Text(product.rating.rate.toString()),
-                                          const SizedBox(width: 4),
-                                          Text(
-                                              "(${"${product.rating.reviewCount} reviews"})"),
-                                        ],
-                                      ),
-                                      IconButton(
-                                        onPressed: () => controller
-                                            .toggleFavorite(product.id),
-                                        icon: Icon(
-                                          controller.isFavorite(product.id)
-                                              ? Icons.favorite
-                                              : Icons.favorite_outline,
-                                          color:
-                                              controller.isFavorite(product.id)
-                                                  ? Colors.red
-                                                  : Colors.grey,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Text("\$${product.price.toString()}"),
-                                ],
+                      GestureDetector(
+                        onTap: () => context.go('/details', extra: product),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Row(
+                            children: [
+                              Image.network(
+                                product.imageUrl,
+                                width: 126,
+                                height: 121,
                               ),
-                            ),
-                          ],
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(product.name),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Icon(
+                                              Icons.star,
+                                              color: Colors.yellow[600],
+                                            ),
+                                            const SizedBox(width: 4),
+                                            Text(
+                                                product.rating.rate.toString()),
+                                            const SizedBox(width: 4),
+                                            Text(
+                                                "(${"${product.rating.reviewCount} reviews"})"),
+                                          ],
+                                        ),
+                                        IconButton(
+                                          onPressed: () => controller
+                                              .toggleFavorite(product.id),
+                                          icon: Icon(
+                                            controller.isFavorite(product.id)
+                                                ? Icons.favorite
+                                                : Icons.favorite_outline,
+                                            color: controller
+                                                    .isFavorite(product.id)
+                                                ? Colors.red
+                                                : Colors.grey,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Text("\$${product.price.toString()}"),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       const SizedBox(

@@ -1,5 +1,5 @@
 import 'package:loja/domain/services/http_service.dart';
-import 'package:loja/domain/shared/http_response.dart';
+import 'package:loja/core/shared/http_response.dart';
 import 'package:dio/dio.dart';
 
 class DioConnectService implements IHttpService {
