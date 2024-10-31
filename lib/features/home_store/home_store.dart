@@ -20,11 +20,13 @@ class _HomeStoreState extends State<HomeStore> {
   void initState() {
     super.initState();
     controller.fetchProducts();
+    controller.loadFavorites();
   }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -111,8 +113,9 @@ class _HomeStoreState extends State<HomeStore> {
                                           ],
                                         ),
                                         IconButton(
-                                          onPressed: () => controller
-                                              .toggleFavorite(product.id),
+                                          onPressed: () async =>
+                                              await controller
+                                                  .toggleFavorite(product.id),
                                           icon: Icon(
                                             controller.isFavorite(product.id)
                                                 ? Icons.favorite

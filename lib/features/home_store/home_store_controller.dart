@@ -1,24 +1,53 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:loja/domain/repositories/home_store_repository.dart';
+import 'package:loja/domain/services/shared_preferences_service.dart';
 import 'package:loja/features/home_store/states/home_store_state.dart';
 
 class HomeStoreController extends ValueNotifier<HomeStoreState> {
   late final IHomeStoreRepository _dataSource;
+  late final ISharedPreferencesService _sharedPreferencesService;
 
-  HomeStoreController({required IHomeStoreRepository dataSource})
+  HomeStoreController(
+      {required IHomeStoreRepository dataSource,
+      required ISharedPreferencesService sharedPreferencesService})
       : super(HomeStoreStateEmpty()) {
     _dataSource = dataSource;
+    _sharedPreferencesService = sharedPreferencesService;
   }
 
-  Map<num, bool> favorites = {};
+  List<num> favoriteIds = [];
 
-  void toggleFavorite(num productId) {
-    favorites[productId] = !(favorites[productId] ?? false);
+  Future<void> loadFavorites() async {
+    final savedFavoritesJson =
+        await _sharedPreferencesService.getData<String>('favorites');
+    if (savedFavoritesJson != null) {
+      final List<dynamic> decodedList = jsonDecode(savedFavoritesJson);
+      favoriteIds = decodedList.map((id) => id as num).toList();
+      notifyListeners();
+    }
+  }
+
+  Future<void> toggleFavorite(num productId) async {
+    if (favoriteIds.contains(productId)) {
+      favoriteIds.remove(productId);
+    } else {
+      favoriteIds.add(productId);
+    }
+    await _saveFavorites();
     notifyListeners();
   }
 
   bool isFavorite(num productId) {
-    return favorites[productId] ?? false;
+    return favoriteIds.contains(productId);
+  }
+
+  // Salvar o estado dos favoritos no SharedPreferences
+  Future<void> _saveFavorites() async {
+    final jsonString = jsonEncode(favoriteIds);
+    await _sharedPreferencesService.saveData<String>('favorites', jsonString);
   }
 
   Future<void> searchProductByName(String name) async {

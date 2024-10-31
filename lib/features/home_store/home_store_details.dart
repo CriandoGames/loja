@@ -17,7 +17,9 @@ class _HomeStoreDetailsState extends State<HomeStoreDetails> {
 
   @override
   Widget build(BuildContext context) {
-    print(controller.isFavorite(widget._product.id));
+    controller.loadFavorites().whenComplete(() {
+      setState(() {});
+    });
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -31,8 +33,6 @@ class _HomeStoreDetailsState extends State<HomeStoreDetails> {
           IconButton(
             onPressed: () {
               controller.toggleFavorite(widget._product.id);
-
-              setState(() {});
             },
             icon: Icon(
               controller.isFavorite(widget._product.id)
