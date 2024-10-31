@@ -54,7 +54,6 @@ class _HomeStoreState extends State<HomeStore> {
               ),
               onChanged: (value) {
                 // Implementação para pesquisa
-                ;
               },
             ),
           ),
@@ -72,13 +71,13 @@ class _HomeStoreState extends State<HomeStore> {
               itemCount: state.products.length,
               itemBuilder: (_, index) {
                 final product = state.products[index];
-                return Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: SizedBox(
-                    width: size.width * 0.1,
-                    child: Column(
-                      children: [
-                        Row(
+                return SizedBox(
+                  width: size.width * 0.1,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Row(
                           children: [
                             Image.network(
                               product.imageUrl,
@@ -96,16 +95,30 @@ class _HomeStoreState extends State<HomeStore> {
                                     children: [
                                       Row(
                                         children: [
-                                          const Icon(Icons.star_border),
+                                          Icon(
+                                            Icons.star,
+                                            color: Colors.yellow[600],
+                                          ),
+                                          const SizedBox(width: 4),
                                           Text(product.rating.rate.toString()),
+                                          const SizedBox(width: 4),
                                           Text(
                                               "(${"${product.rating.reviewCount} reviews"})"),
                                         ],
                                       ),
                                       IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(
-                                              Icons.favorite_outline))
+                                        onPressed: () => controller
+                                            .toggleFavorite(product.id),
+                                        icon: Icon(
+                                          controller.isFavorite(product.id)
+                                              ? Icons.favorite
+                                              : Icons.favorite_outline,
+                                          color:
+                                              controller.isFavorite(product.id)
+                                                  ? Colors.red
+                                                  : Colors.grey,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                   Text("\$${product.price.toString()}"),
@@ -114,15 +127,15 @@ class _HomeStoreState extends State<HomeStore> {
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        const Divider(
-                          height: 1,
-                          thickness: 1,
-                        )
-                      ],
-                    ),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      const Divider(
+                        height: 1,
+                        thickness: 1,
+                      )
+                    ],
                   ),
                 );
               },

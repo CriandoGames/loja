@@ -10,6 +10,17 @@ class HomeStoreController extends ValueNotifier<HomeStoreState> {
     _dataSource = dataSource;
   }
 
+  Map<num, bool> favorites = {};
+
+  void toggleFavorite(num productId) {
+    favorites[productId] = !(favorites[productId] ?? false);
+    notifyListeners();
+  }
+
+  bool isFavorite(num productId) {
+    return favorites[productId] ?? false;
+  }
+
   Future<void> searchProductByName(String name) async {
     value = HomeStoreStateLoading();
 
