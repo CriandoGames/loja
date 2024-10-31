@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:loja/domain/repositories/home_store_repository.dart';
 import 'package:loja/domain/services/shared_preferences_service.dart';
 import 'package:loja/features/home_store/states/home_store_state.dart';
+import 'package:loja/infra/model/product_model.dart';
 
 class HomeStoreController extends ValueNotifier<HomeStoreState> {
   late final IHomeStoreRepository _dataSource;
@@ -18,6 +19,9 @@ class HomeStoreController extends ValueNotifier<HomeStoreState> {
     _sharedPreferencesService = sharedPreferencesService;
   }
 
+  List<ProductModel> _allProducts = [];
+  List<ProductModel> filteredProducts = [];
+
   List<num> favoriteIds = [];
 
   Future<void> loadFavorites() async {
@@ -28,7 +32,6 @@ class HomeStoreController extends ValueNotifier<HomeStoreState> {
       favoriteIds = decodedList.map((id) => id as num).toList();
       notifyListeners();
     }
-
   }
 
   Future<void> toggleFavorite(num productId) async {
@@ -45,13 +48,12 @@ class HomeStoreController extends ValueNotifier<HomeStoreState> {
     return favoriteIds.contains(productId);
   }
 
-  // Salvar o estado dos favoritos no SharedPreferences
   Future<void> _saveFavorites() async {
     final jsonString = jsonEncode(favoriteIds);
     await _sharedPreferencesService.saveData<String>('favorites', jsonString);
   }
 
-  Future<void> searchProductByName(String name) async {
+  void searchProductByName(String name) async {
     value = HomeStoreStateLoading();
 
     final result = await _dataSource.fetchByName(name);
@@ -71,7 +73,28 @@ class HomeStoreController extends ValueNotifier<HomeStoreState> {
     if (result.isEmpty) {
       value = HomeStoreStateError("");
     } else {
+      filteredProducts = result;
+      _allProducts = filteredProducts;
+
       value = HomeStoreStateInitial(products: result);
     }
+  }
+
+  void filterByCategory(String? name) {
+    if (name == null || name.isEmpty) {
+      filteredProducts = _allProducts;
+      value = HomeStoreStateInitial(products: _allProducts);
+      return;
+    }
+
+    filteredProducts = _allProducts
+        .where((element) =>
+            element.name.toUpperCase().contains(name.toUpperCase()))
+        .toList();
+
+    value = HomeStoreStateLoading();
+    if (filteredProducts.isEmpty) value = HomeStoreStateEmpty();
+
+    value = HomeStoreStateInitial(products: filteredProducts);
   }
 }

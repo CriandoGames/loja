@@ -39,28 +39,27 @@ class _HomeStoreState extends State<HomeStore> {
           ),
         ],
         bottom: PreferredSize(
-          preferredSize:
-              const Size.fromHeight(80), // Altura da barra de pesquisa
-          child: Padding(
-            padding:
-                const EdgeInsets.only(left: 30, right: 30, bottom: 16, top: 16),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Search Anything',
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
+            preferredSize:
+                const Size.fromHeight(80), // Altura da barra de pesquisa
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  left: 20, right: 20, bottom: 16, top: 16),
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: 'Search Anything',
+                  prefixIcon: const Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide.none,
+                  ),
+                  filled: true,
+                  fillColor: Colors.grey[100],
                 ),
-                filled: true,
-                fillColor: Colors.grey[100],
+                onChanged: (value) {
+                  controller.filterByCategory(value);
+                },
               ),
-              onChanged: (value) {
-                // Implementação para pesquisa
-              },
-            ),
-          ),
-        ),
+            )),
       ),
       body: ValueListenableBuilder<HomeStoreState>(
         valueListenable: controller,
