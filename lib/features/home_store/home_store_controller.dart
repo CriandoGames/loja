@@ -28,6 +28,7 @@ class HomeStoreController extends ValueNotifier<HomeStoreState> {
       favoriteIds = decodedList.map((id) => id as num).toList();
       notifyListeners();
     }
+
   }
 
   Future<void> toggleFavorite(num productId) async {

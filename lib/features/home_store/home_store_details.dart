@@ -16,10 +16,15 @@ class _HomeStoreDetailsState extends State<HomeStoreDetails> {
   final controller = injector.get<HomeStoreController>();
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     controller.loadFavorites().whenComplete(() {
       setState(() {});
     });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -33,6 +38,7 @@ class _HomeStoreDetailsState extends State<HomeStoreDetails> {
           IconButton(
             onPressed: () {
               controller.toggleFavorite(widget._product.id);
+              setState(() {});
             },
             icon: Icon(
               controller.isFavorite(widget._product.id)
