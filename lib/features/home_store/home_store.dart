@@ -19,7 +19,9 @@ class _HomeStoreState extends State<HomeStore> {
   @override
   void initState() {
     super.initState();
-    controller.fetchProducts();
+    controller.fetchProducts().catchError((error) {
+      context.go('/wrong');
+    });
     controller.loadFavorites();
   }
 
@@ -28,9 +30,12 @@ class _HomeStoreState extends State<HomeStore> {
     final size = MediaQuery.of(context).size;
     controller.loadFavorites().whenComplete(
       () {
-        setState(() {});
+        if (!controller.isConnected()) {
+          context.pop('/wrong');
+        }
       },
     );
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -83,7 +88,7 @@ class _HomeStoreState extends State<HomeStore> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       GestureDetector(
-                        onTap: () => context.go('/details', extra: product),
+                        onTap: () => context.push('/details', extra: product),
                         child: Padding(
                           padding: const EdgeInsets.all(16),
                           child: Row(
@@ -179,10 +184,6 @@ class _HomeStoreState extends State<HomeStore> {
                 width: 300,
                 height: 280,
               ),
-            );
-          } else if (state is HomeStoreStateError) {
-            return Center(
-              child: Image.asset(ImagePath.homeEmptyImage()),
             );
           }
           return const SizedBox();

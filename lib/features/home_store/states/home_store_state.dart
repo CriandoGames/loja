@@ -17,9 +17,3 @@ class HomeStoreStateSeachSuccess extends HomeStoreState {
 
   HomeStoreStateSeachSuccess(this.products);
 }
-
-class HomeStoreStateError extends HomeStoreState {
-  final String message;
-
-  HomeStoreStateError(this.message);
-}

@@ -9,7 +9,7 @@ class ImagePath {
     return 'assets/images/empty.png';
   }
 
-  static String homeLoadingImage() {
+  static String wrongImage() {
     return 'assets/images/wrong.png';
   }
 }

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:loja/core/shared/is_connection.dart';
 import 'package:loja/domain/repositories/home_store_repository.dart';
 import 'package:loja/domain/services/shared_preferences_service.dart';
 import 'package:loja/features/home_store/states/home_store_state.dart';
@@ -48,6 +49,8 @@ class HomeStoreController extends ValueNotifier<HomeStoreState> {
     return favoriteIds.contains(productId);
   }
 
+  bool isConnected() => IsConnection().isConnected;
+
   Future<void> _saveFavorites() async {
     final jsonString = jsonEncode(favoriteIds);
     await _sharedPreferencesService.saveData<String>('favorites', jsonString);
@@ -71,7 +74,7 @@ class HomeStoreController extends ValueNotifier<HomeStoreState> {
     final result = await _dataSource.fetchAll();
 
     if (result.isEmpty) {
-      value = HomeStoreStateError("");
+      value = HomeStoreStateEmpty();
     } else {
       filteredProducts = result;
       _allProducts = filteredProducts;

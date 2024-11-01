@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:loja/features/Error/wrong.dart';
 import 'package:loja/features/home_store/home_store.dart';
 import 'package:loja/features/home_store/home_store_details.dart';
 import 'package:loja/infra/model/product_model.dart';
@@ -25,19 +26,14 @@ class Routes {
               return HomeStoreDetails(product: state.extra as ProductModel);
             },
           ),
+          GoRoute(
+            path: 'wrong',
+            builder: (BuildContext context, GoRouterState state) {
+              return const Wrong();
+            },
+          ),
         ],
       ),
-      GoRoute(
-        path: 'wrong',
-        builder: (BuildContext context, GoRouterState state) {
-          return const Scaffold(
-            body: Center(
-              child: Text('404 - Not Found'),
-            ),
-          );
-        },
-      ),
-      
     ],
   );
 }
