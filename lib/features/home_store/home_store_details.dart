@@ -27,6 +27,7 @@ class _HomeStoreDetailsState extends State<HomeStoreDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: Text(
           'Product Details',
           style: TextStyle(
@@ -67,9 +68,10 @@ class _HomeStoreDetailsState extends State<HomeStoreDetails> {
               Text(
                 widget._product.name,
                 style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+                    color: Color(0xFF37474f),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 0.6),
               ),
               const SizedBox(height: 8),
               Row(
@@ -83,11 +85,19 @@ class _HomeStoreDetailsState extends State<HomeStoreDetails> {
                           color: Colors.yellow[600],
                         ),
                         const SizedBox(width: 4),
-                        Text(widget._product.rating.rate.toString()),
+                        Text(widget._product.rating.rate.toString(),
+                            style: TextStyle(
+                                color: Colors.grey[600],
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600)),
                         const SizedBox(width: 4),
                         Flexible(
                           child: Text(
                             "(${widget._product.rating.reviewCount} reviews)",
+                            style: TextStyle(
+                                color: Colors.grey[600],
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                           ),
@@ -118,6 +128,7 @@ class _HomeStoreDetailsState extends State<HomeStoreDetails> {
                       widget._product.category,
                       style: TextStyle(
                         fontSize: 16,
+                        fontWeight: FontWeight.w500,
                         color: Colors.grey[800],
                       ),
                       overflow: TextOverflow.ellipsis,
@@ -140,6 +151,7 @@ class _HomeStoreDetailsState extends State<HomeStoreDetails> {
                       widget._product.description,
                       style: TextStyle(
                         fontSize: 16,
+                        fontWeight: FontWeight.w500,
                         color: Colors.grey[800],
                       ),
                     ),

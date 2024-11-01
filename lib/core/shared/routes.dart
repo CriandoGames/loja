@@ -27,6 +27,17 @@ class Routes {
           ),
         ],
       ),
+      GoRoute(
+        path: 'wrong',
+        builder: (BuildContext context, GoRouterState state) {
+          return const Scaffold(
+            body: Center(
+              child: Text('404 - Not Found'),
+            ),
+          );
+        },
+      ),
+      
     ],
   );
 }

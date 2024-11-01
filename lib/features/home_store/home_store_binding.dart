@@ -10,8 +10,9 @@ import 'package:loja/infra/repository/home_store_repository_impl.dart';
 void setupHomeStoreBinding() {
   injector.registerFactory<IHomeStoreDataSource>(
       () => HomeStoreDataSourceImpl(httpService: injector.get<IHttpService>()));
-  injector.registerFactory<IHomeStoreRepository>(() => HomeStoreRepositoryImpl(
-      dataSource: injector.get<IHomeStoreDataSource>()));
+  injector.registerLazySingleton<IHomeStoreRepository>(() =>
+      HomeStoreRepositoryImpl(
+          dataSource: injector.get<IHomeStoreDataSource>()));
 
   injector.registerFactory<HomeStoreController>(() => HomeStoreController(
       dataSource: injector.get<IHomeStoreRepository>(),

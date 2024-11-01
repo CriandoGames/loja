@@ -76,6 +76,8 @@ class _HomeStoreState extends State<HomeStore> {
                 return SizedBox(
                   width: size.width * 0.1,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       GestureDetector(
                         onTap: () => context.go('/details', extra: product),
@@ -92,7 +94,12 @@ class _HomeStoreState extends State<HomeStore> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(product.name),
+                                    Text(product.name,
+                                        style: const TextStyle(
+                                            color: Color(0xFF37474f),
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                            letterSpacing: 0.6)),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -104,11 +111,20 @@ class _HomeStoreState extends State<HomeStore> {
                                               color: Colors.yellow[600],
                                             ),
                                             const SizedBox(width: 4),
-                                            Text(
-                                                product.rating.rate.toString()),
+                                            Text(product.rating.rate.toString(),
+                                                style: TextStyle(
+                                                    color: Colors.grey[600],
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.w600)),
                                             const SizedBox(width: 4),
                                             Text(
-                                                "(${"${product.rating.reviewCount} reviews"})"),
+                                                "(${"${product.rating.reviewCount} reviews"})",
+                                                style: TextStyle(
+                                                    color: Colors.grey[600],
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.w600)),
                                           ],
                                         ),
                                         IconButton(
@@ -127,7 +143,13 @@ class _HomeStoreState extends State<HomeStore> {
                                         ),
                                       ],
                                     ),
-                                    Text("\$${product.price.toString()}"),
+                                    Text(
+                                      "\$${product.price.toString()}",
+                                      style: const TextStyle(
+                                          color: Color(0xFFF37A20),
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -136,7 +158,7 @@ class _HomeStoreState extends State<HomeStore> {
                         ),
                       ),
                       const SizedBox(
-                        height: 16,
+                        height: 10,
                       ),
                       const Divider(
                         height: 1,
@@ -149,7 +171,11 @@ class _HomeStoreState extends State<HomeStore> {
             );
           } else if (state is HomeStoreStateEmpty) {
             return Center(
-              child: Image.asset(ImagePath.homeEmptyImage()),
+              child: Image.asset(
+                ImagePath.homeEmptyImage(),
+                width: 300,
+                height: 280,
+              ),
             );
           } else if (state is HomeStoreStateError) {
             return Center(
