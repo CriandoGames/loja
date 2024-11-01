@@ -19,9 +19,7 @@ class _HomeStoreState extends State<HomeStore> {
   @override
   void initState() {
     super.initState();
-    controller.fetchProducts().catchError((error) {
-      context.go('/wrong');
-    });
+    controller.fetchProducts();
     controller.loadFavorites();
   }
 
