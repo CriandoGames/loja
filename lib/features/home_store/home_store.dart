@@ -26,7 +26,11 @@ class _HomeStoreState extends State<HomeStore> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
+    controller.loadFavorites().whenComplete(
+      () {
+        setState(() {});
+      },
+    );
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -39,8 +43,7 @@ class _HomeStoreState extends State<HomeStore> {
           ),
         ],
         bottom: PreferredSize(
-            preferredSize:
-                const Size.fromHeight(80), // Altura da barra de pesquisa
+            preferredSize: const Size.fromHeight(80),
             child: Padding(
               padding: const EdgeInsets.only(
                   left: 20, right: 20, bottom: 16, top: 16),
