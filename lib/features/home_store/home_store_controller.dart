@@ -23,6 +23,8 @@ class HomeStoreController extends ValueNotifier<HomeStoreState> {
   List<ProductModel> _allProducts = [];
   List<ProductModel> filteredProducts = [];
 
+  bool isEmptyError() => _allProducts.isEmpty;
+
   List<num> favoriteIds = [];
 
   Future<void> loadFavorites() async {

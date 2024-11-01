@@ -31,8 +31,16 @@ class _HomeStoreState extends State<HomeStore> {
     controller.loadFavorites().whenComplete(
       () {
         if (!controller.isConnected()) {
-          context.pop('/wrong');
+          context.go('/wrong');
         }
+
+        if (controller.value is HomeStoreStateEmpty &&
+            controller.isEmptyError() &&
+            controller.isConnected()) {
+          controller.fetchProducts();
+        }
+
+        setState(() {});
       },
     );
 
