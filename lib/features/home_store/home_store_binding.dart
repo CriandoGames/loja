@@ -11,9 +11,10 @@ void setupHomeStoreBinding() {
   injector.registerFactory<IHomeStoreDataSource>(
       () => HomeStoreDataSourceImpl(httpService: injector.get<IHttpService>()));
   injector.registerFactory<IHomeStoreRepository>(() => HomeStoreRepositoryImpl(
+      sharedPreferences: injector.get<ISharedPreferencesService>(),
       dataSource: injector.get<IHomeStoreDataSource>()));
 
   injector.registerFactory<HomeStoreController>(() => HomeStoreController(
-      dataSource: injector.get<IHomeStoreRepository>(),
-      sharedPreferencesService: injector.get<ISharedPreferencesService>()));
+        repository: injector.get<IHomeStoreRepository>(),
+      ));
 }

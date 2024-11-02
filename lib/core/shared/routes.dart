@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:loja/features/Error/wrong.dart';
+import 'package:loja/features/error/wrong.dart';
 import 'package:loja/features/home_store/home_store.dart';
 import 'package:loja/features/home_store/home_store_details.dart';
 import 'package:loja/infra/model/product_model.dart';

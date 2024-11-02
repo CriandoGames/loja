@@ -1,23 +1,21 @@
 import 'dart:async';
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:loja/core/shared/is_connection.dart';
 import 'package:loja/domain/repositories/home_store_repository.dart';
-import 'package:loja/domain/services/shared_preferences_service.dart';
 import 'package:loja/features/home_store/states/home_store_state.dart';
 import 'package:loja/infra/model/product_model.dart';
 
 class HomeStoreController extends ValueNotifier<HomeStoreState> {
-  late final IHomeStoreRepository _dataSource;
-  late final ISharedPreferencesService _sharedPreferencesService;
+  late final IHomeStoreRepository _repository;
 
-  HomeStoreController(
-      {required IHomeStoreRepository dataSource,
-      required ISharedPreferencesService sharedPreferencesService})
-      : super(HomeStoreStateEmpty()) {
-    _dataSource = dataSource;
-    _sharedPreferencesService = sharedPreferencesService;
+  HomeStoreController({
+    required IHomeStoreRepository repository,
+  }) : super(HomeStoreStateEmpty()) {
+    _repository = repository;
+  }
+
+  Future<void> initialize() async {
+    Future.wait([fetchProducts(), loadFavorites()]);
   }
 
   List<ProductModel> _allProducts = [];
@@ -28,13 +26,7 @@ class HomeStoreController extends ValueNotifier<HomeStoreState> {
   List<num> favoriteIds = [];
 
   Future<void> loadFavorites() async {
-    final savedFavoritesJson =
-        await _sharedPreferencesService.getData<String>('favorites');
-    if (savedFavoritesJson != null) {
-      final List<dynamic> decodedList = jsonDecode(savedFavoritesJson);
-      favoriteIds = decodedList.map((id) => id as num).toList();
-      notifyListeners();
-    }
+    favoriteIds = await _repository.getLocalFavoriteIds();
   }
 
   Future<void> toggleFavorite(num productId) async {
@@ -43,8 +35,7 @@ class HomeStoreController extends ValueNotifier<HomeStoreState> {
     } else {
       favoriteIds.add(productId);
     }
-    await _saveFavorites();
-    notifyListeners();
+    await _saveLocalFavoritesIds();
   }
 
   bool isFavorite(num productId) {
@@ -53,15 +44,14 @@ class HomeStoreController extends ValueNotifier<HomeStoreState> {
 
   bool isConnected() => IsConnection().isConnected;
 
-  Future<void> _saveFavorites() async {
-    final jsonString = jsonEncode(favoriteIds);
-    await _sharedPreferencesService.saveData<String>('favorites', jsonString);
+  Future<void> _saveLocalFavoritesIds() async {
+    await _repository.saveLocalFavoriteIds(favoriteIds);
   }
 
   void searchProductByName(String name) async {
     value = HomeStoreStateLoading();
 
-    final result = await _dataSource.fetchByName(name);
+    final result = await _repository.fetchByName(name);
 
     if (result.isEmpty) {
       value = HomeStoreStateEmpty();
@@ -73,7 +63,7 @@ class HomeStoreController extends ValueNotifier<HomeStoreState> {
   Future<void> fetchProducts() async {
     value = HomeStoreStateLoading();
 
-    final result = await _dataSource.fetchAll();
+    final result = await _repository.fetchAll();
 
     if (result.isEmpty) {
       value = HomeStoreStateEmpty();

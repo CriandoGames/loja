@@ -1,12 +1,20 @@
+import 'dart:convert';
+
 import 'package:loja/domain/data/home_store_data_source.dart';
 import 'package:loja/domain/repositories/home_store_repository.dart';
+import 'package:loja/domain/services/shared_preferences_service.dart';
 import 'package:loja/infra/model/product_model.dart';
+import 'package:loja/infra/repository/local_keys/local_keys.dart';
 
 class HomeStoreRepositoryImpl implements IHomeStoreRepository {
   late final IHomeStoreDataSource _dataSource;
+  late final ISharedPreferencesService _sharedPreferences;
 
-  HomeStoreRepositoryImpl({required IHomeStoreDataSource dataSource}) {
+  HomeStoreRepositoryImpl(
+      {required IHomeStoreDataSource dataSource,
+      required ISharedPreferencesService sharedPreferences}) {
     _dataSource = dataSource;
+    _sharedPreferences = sharedPreferences;
   }
 
   @override
@@ -37,5 +45,27 @@ class HomeStoreRepositoryImpl implements IHomeStoreRepository {
     }
 
     return products;
+  }
+
+  @override
+  Future<List<num>> getLocalFavoriteIds() async {
+    final savedFavoritesJson =
+        await _sharedPreferences.getData<String>(LocalKeys.favorite.name);
+    if (savedFavoritesJson != null) {
+      final List<dynamic> decodedList = jsonDecode(savedFavoritesJson);
+
+      return decodedList.map((id) => id as num).toList();
+    }
+
+    return [];
+  }
+
+  @override
+  Future<void> saveLocalFavoriteIds(List<num> ids) async {
+    final jsonString = jsonEncode(ids);
+    await _sharedPreferences.saveData<String>(
+      LocalKeys.favorite.name,
+      jsonString,
+    );
   }
 }

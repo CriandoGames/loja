@@ -19,8 +19,7 @@ class _HomeStoreState extends State<HomeStore> {
   @override
   void initState() {
     super.initState();
-    controller.fetchProducts();
-    controller.loadFavorites();
+    controller.initialize();
   }
 
   @override
