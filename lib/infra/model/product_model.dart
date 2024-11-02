@@ -10,7 +10,7 @@ class ProductModel extends Equatable {
   final String imageUrl;
   final RateModel rating;
 
-  ProductModel({
+  const ProductModel({
     required this.id,
     required this.name,
     required this.description,
@@ -31,6 +31,16 @@ class ProductModel extends Equatable {
       rating: RateModel.fromJson(json['rating']),
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'title': name,
+        'description': description,
+        'price': price,
+        'category': category,
+        'image': imageUrl,
+        'rating': rating.toJson(),
+      };
 
   @override
   List<Object?> get props => [

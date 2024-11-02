@@ -16,6 +16,11 @@ class RateModel extends Equatable {
     );
   }
 
+  Map<String, dynamic> toJson() => {
+        'count': reviewCount,
+        'rate': rate,
+      };
+
   @override
   List<Object?> get props => [reviewCount, rate];
 }

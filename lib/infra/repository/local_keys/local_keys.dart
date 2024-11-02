@@ -1,1 +1,1 @@
-enum LocalKeys { favorite }
+enum LocalKeys { favorite, products }

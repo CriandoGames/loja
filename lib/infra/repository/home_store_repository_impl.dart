@@ -18,11 +18,6 @@ class HomeStoreRepositoryImpl implements IHomeStoreRepository {
   }
 
   @override
-  Future<List<ProductModel>> fetchFavorite() {
-    throw UnimplementedError();
-  }
-
-  @override
   Future<List<ProductModel>> fetchByName(String name) async {
     final products = await fetchAll();
 
@@ -65,6 +60,28 @@ class HomeStoreRepositoryImpl implements IHomeStoreRepository {
     final jsonString = jsonEncode(ids);
     await _sharedPreferences.saveData<String>(
       LocalKeys.favorite.name,
+      jsonString,
+    );
+  }
+
+  @override
+  Future<List<ProductModel>> getLocalChosenFavorite() async {
+    final json = await _sharedPreferences.getData<String>(
+      LocalKeys.products.name,
+    );
+    if (json != null) {
+      final decodedJson = jsonDecode(json) as List;
+      return decodedJson.map((json) => ProductModel.fromJson(json)).toList();
+    }
+
+    return [];
+  }
+
+  @override
+  Future<void> saveLocalChosenFavorite(List<ProductModel> products) async {
+    final jsonString = jsonEncode(products.map((p) => p.toJson()).toList());
+    await _sharedPreferences.saveData<String>(
+      LocalKeys.products.name,
       jsonString,
     );
   }

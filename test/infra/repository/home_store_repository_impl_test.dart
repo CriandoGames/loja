@@ -60,7 +60,7 @@ void main() {
         }
       ];
 
-      final tModel = [
+      const tModel = [
         ProductModel(
             id: 1,
             name: 'title the product',
@@ -68,7 +68,7 @@ void main() {
             price: 59.9,
             category: 'category the product',
             imageUrl: 'image1.png',
-            rating: const RateModel(reviewCount: 50, rate: 4.9)),
+            rating: RateModel(reviewCount: 50, rate: 4.9)),
         ProductModel(
             id: 2,
             name: 'title2 the product',
@@ -76,7 +76,7 @@ void main() {
             price: 15.5,
             category: 'category2 the product',
             imageUrl: 'image2.png',
-            rating: const RateModel(reviewCount: 99, rate: 3.7)),
+            rating: RateModel(reviewCount: 99, rate: 3.7)),
       ];
 
       when(() => dataSource.fetchAll()).thenAnswer(
@@ -106,13 +106,50 @@ void main() {
 
   group('local repository', () {
     test('must return list of num in local shared preferences', () async {
-      final tFavoriteIds = jsonEncode([1, 3, 5]);
+      final tNumJson = jsonEncode([1, 3, 5]);
       when(() => sharedPreferences.getData<String>(
             LocalKeys.favorite.name,
-          )).thenAnswer((_) async => tFavoriteIds);
+          )).thenAnswer((_) async => tNumJson);
 
       final result = await repository.getLocalFavoriteIds();
-      expect(result, jsonDecode(tFavoriteIds));
+      expect(result, jsonDecode(tNumJson));
+    });
+
+    test('must return list of products in local shared preferences', () async {
+      const tModel = [
+        ProductModel(
+            id: 1,
+            name: 'title the product',
+            description: 'description the product',
+            price: 59.9,
+            category: 'category the product',
+            imageUrl: 'image1.png',
+            rating: RateModel(reviewCount: 50, rate: 4.9)),
+        ProductModel(
+          id: 2,
+          name: 'title2 the product',
+          description: 'description2 the product',
+          price: 15.5,
+          category: 'category2 the product',
+          imageUrl: 'image2.png',
+          rating: RateModel(reviewCount: 99, rate: 3.7),
+        ),
+      ];
+
+      final tModelJson = jsonEncode(tModel.map((e) => e.toJson()).toList());
+
+      when(() => sharedPreferences.getData<String>(
+            LocalKeys.products.name,
+          )).thenAnswer((_) async => tModelJson);
+
+      final decodedJson = jsonDecode(tModelJson) as List;
+
+      final tModelList =
+          decodedJson.map((json) => ProductModel.fromJson(json)).toList();
+
+      final result = await repository.getLocalChosenFavorite();
+
+      expect(result, tModelList);
     });
   });
 }
