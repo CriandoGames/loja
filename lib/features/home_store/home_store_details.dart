@@ -17,7 +17,7 @@ class _HomeStoreDetailsState extends State<HomeStoreDetails> {
 
   @override
   void initState() {
-    controller.loadFavorites().whenComplete(() {
+    controller.fetchFavorites().whenComplete(() {
       setState(() {});
     });
     super.initState();

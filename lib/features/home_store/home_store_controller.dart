@@ -15,7 +15,7 @@ class HomeStoreController extends ValueNotifier<HomeStoreState> {
   }
 
   Future<void> initialize() async {
-    Future.wait([fetchProducts(), loadFavorites()]);
+    Future.wait([fetchProducts(), fetchFavorites()]);
   }
 
   List<ProductModel> _allProducts = [];
@@ -25,7 +25,7 @@ class HomeStoreController extends ValueNotifier<HomeStoreState> {
 
   List<num> favoriteIds = [];
 
-  Future<void> loadFavorites() async {
+  Future<void> fetchFavorites() async {
     favoriteIds = await _repository.getLocalFavoriteIds();
   }
 

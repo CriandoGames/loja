@@ -25,7 +25,7 @@ class _HomeStoreState extends State<HomeStore> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    controller.loadFavorites().whenComplete(
+    controller.fetchFavorites().whenComplete(
       () {
         if (!controller.isConnected()) {
           context.go('/wrong');
