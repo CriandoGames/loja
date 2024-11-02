@@ -24,8 +24,7 @@ void main() {
       'description': 'description the product',
       'price': 59.9,
       'category': 'category the product',
-      'image':
-          'https://plus.unsplash.com/premium_photo-1664392147011-2a720f214e01?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D',
+      'image': 'image.png',
       'rating': {
         'count': 50,
         'rate': 4.9,
