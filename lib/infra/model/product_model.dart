@@ -1,6 +1,7 @@
+import 'package:equatable/equatable.dart';
 import 'package:loja/infra/model/rate_model.dart';
 
-class ProductModel {
+class ProductModel extends Equatable {
   final num id;
   final String name;
   final String description;
@@ -19,7 +20,6 @@ class ProductModel {
     required this.rating,
   });
 
-
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
       id: json['id'],
@@ -31,4 +31,15 @@ class ProductModel {
       rating: RateModel.fromJson(json['rating']),
     );
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        name,
+        description,
+        price,
+        category,
+        imageUrl,
+        rating,
+      ];
 }

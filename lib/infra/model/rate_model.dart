@@ -1,11 +1,13 @@
-class RateModel {
-  final int reviewCount;
-  final num rate;
+import 'package:equatable/equatable.dart';
 
-  RateModel({
+class RateModel extends Equatable {
+  const RateModel({
     required this.reviewCount,
     required this.rate,
   });
+
+  final int reviewCount;
+  final num rate;
 
   factory RateModel.fromJson(Map<String, dynamic> json) {
     return RateModel(
@@ -13,4 +15,7 @@ class RateModel {
       rate: json['rate'],
     );
   }
+
+  @override
+  List<Object?> get props => [reviewCount, rate];
 }
