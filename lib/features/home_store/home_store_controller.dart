@@ -56,7 +56,7 @@ class HomeStoreController extends ValueNotifier<HomeStoreState> {
     if (result.isEmpty) {
       value = HomeStoreStateEmpty();
     } else {
-      value = HomeStoreStateSeachSuccess(result);
+      value = HomeStoreStateSearchSuccess(result);
     }
   }
 

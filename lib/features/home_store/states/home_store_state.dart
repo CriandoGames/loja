@@ -12,8 +12,8 @@ class HomeStoreStateInitial extends HomeStoreState {
 
 class HomeStoreStateEmpty extends HomeStoreState {}
 
-class HomeStoreStateSeachSuccess extends HomeStoreState {
+class HomeStoreStateSearchSuccess extends HomeStoreState {
   final List<ProductModel> products;
 
-  HomeStoreStateSeachSuccess(this.products);
+  HomeStoreStateSearchSuccess(this.products);
 }
