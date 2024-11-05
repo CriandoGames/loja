@@ -74,12 +74,6 @@
       "languageVersion": "3.3"
     },
     {
-      "name": "either_dart",
-      "rootUri": "file:///C:/Users/carlo/AppData/Local/Pub/Cache/hosted/pub.dev/either_dart-1.0.0",
-      "packageUri": "lib/",
-      "languageVersion": "3.0"
-    },
-    {
       "name": "equatable",
       "rootUri": "file:///C:/Users/carlo/AppData/Local/Pub/Cache/hosted/pub.dev/equatable-2.0.5",
       "packageUri": "lib/",
@@ -380,7 +374,7 @@
       "languageVersion": "3.4"
     }
   ],
-  "generated": "2024-11-02T12:18:45.095573Z",
+  "generated": "2024-11-05T01:23:52.691976Z",
   "generator": "pub",
   "generatorVersion": "3.4.4",
   "flutterRoot": "file:///D:/src/flutterstable/flutter",
