@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:loja/core/shared/injector.dart';
 import 'package:loja/features/home_store/home_store_controller.dart';
 import 'package:loja/features/home_store/states/home_store_state.dart';
+import 'package:loja/features/theme/app_colors.dart';
 
 import '../../core/shared/image_path.dart';
 import 'widgets/product_card.dart';
@@ -19,8 +20,8 @@ class _HomeStoreState extends State<HomeStore> {
 
   _connectedFail() {
     controller.isConnected().addListener(() {
-      if (controller.isConnected().value) {
-        context.go('/wrong');
+      if (controller.isConnected().value == false) {
+        if (mounted) context.go('/wrong');
       } else {
         controller.initialize();
       }
@@ -43,7 +44,6 @@ class _HomeStoreState extends State<HomeStore> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Products'),
         backgroundColor: Colors.white,
@@ -69,7 +69,7 @@ class _HomeStoreState extends State<HomeStore> {
                     borderSide: BorderSide.none,
                   ),
                   filled: true,
-                  fillColor: Colors.grey[100],
+                  fillColor: AppColors.appGreyLightColor,
                 ),
                 onChanged: (value) {
                   controller.filterByName(value);
@@ -99,8 +99,11 @@ class _HomeStoreState extends State<HomeStore> {
                         onTap: () => context.push('/details', extra: product),
                         child: ProductCard(
                           product: product,
-                          controller: controller,
-                          isIconFavoriteActived: true,
+                          isFavoriteIconEnabled: true,
+                          isFavorite: controller.isFavorite(product),
+                          toggleFavorite: () => controller.toggleFavorite(
+                            product,
+                          ),
                         ),
                       ),
                       const SizedBox(

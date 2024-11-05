@@ -30,7 +30,7 @@ class Routes {
           GoRoute(
             path: 'favorites',
             builder: (BuildContext context, GoRouterState state) {
-              return const HomeStoreFavoretes();
+              return const HomeStoreFavorites();
             },
           ),
           GoRoute(

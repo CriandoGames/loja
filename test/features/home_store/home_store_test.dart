@@ -20,7 +20,7 @@ void main() {
   }
 
   setUpAll(() {
-    registerFallbackValue(ProductModel(
+    registerFallbackValue(const ProductModel(
       id: 0,
       name: 'dummy',
       description: 'dummy',
@@ -58,9 +58,6 @@ void main() {
         .thenAnswer((_) async => Future.value());
     when(() => controller.initialize()).thenAnswer((_) async => Future.value());
     when(() => controller.isEmptyError()).thenAnswer((_) => false);
-    when(() => controller.isFavorite(any())).thenReturn(false);
-    when(() => controller.isFavorite(any())).thenReturn(false);
-    when(() => controller.isFavorite(any())).thenReturn(false);
     when(() => controller.isFavorite(any())).thenReturn(false);
     when(() => controller.isConnected()).thenAnswer((_) => ValueNotifier(true));
     when(() => controller.filterByName('productName')).thenAnswer((_) => () {});

@@ -20,9 +20,9 @@ class InternetConnectionService {
   void _updateConnectionStatus(ConnectivityResult result) {
     if (result == ConnectivityResult.mobile ||
         result == ConnectivityResult.wifi) {
-      isConnected.value = true;
-    } else {
       isConnected.value = false;
+    } else {
+      isConnected.value = true;
     }
   }
 }

@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:loja/features/home_store/home_store_controller.dart';
+import 'package:loja/features/theme/app_colors.dart';
 import 'package:loja/infra/model/product_model.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
     super.key,
     required this.product,
-    required this.controller,
-    required this.isIconFavoriteActived,
+    required this.isFavorite,
+    required this.toggleFavorite,
+    required this.isFavoriteIconEnabled,
   });
 
   final ProductModel product;
-  final bool isIconFavoriteActived;
-  final HomeStoreController controller;
+  final bool isFavoriteIconEnabled;
+  final Future<void> Function() toggleFavorite;
+  final bool isFavorite;
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +33,11 @@ class ProductCard extends StatelessWidget {
               children: [
                 Text(product.name,
                     style: const TextStyle(
-                        color: Color(0xFF37474f),
+                        color: AppColors.appGreyDarkColor,
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                         letterSpacing: 0.6)),
-                !isIconFavoriteActived
+                !isFavoriteIconEnabled
                     ? const SizedBox(
                         height: 4,
                       )
@@ -45,41 +47,42 @@ class ProductCard extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.star,
-                          color: Colors.yellow[600],
+                          color: AppColors.appYellowColor,
                         ),
                         const SizedBox(width: 4),
                         Text(product.rating.rate.toString(),
                             style: TextStyle(
-                                color: Colors.grey[600],
+                                color: AppColors.appGreyDarkColor.withAlpha(
+                                  65,
+                                ),
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600)),
                         const SizedBox(width: 4),
                         Text("(${"${product.rating.reviewCount} reviews"})",
                             style: TextStyle(
-                                color: Colors.grey[600],
+                                color: AppColors.appGreyDarkColor.withAlpha(65),
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600)),
                       ],
                     ),
-                    isIconFavoriteActived
+                    isFavoriteIconEnabled
                         ? IconButton(
-                            onPressed: () async =>
-                                await controller.toggleFavorite(product),
+                            onPressed: () async => await toggleFavorite(),
                             icon: Icon(
-                              controller.isFavorite(product)
+                              isFavorite
                                   ? Icons.favorite
                                   : Icons.favorite_outline,
-                              color: controller.isFavorite(product)
-                                  ? Colors.red
-                                  : Colors.grey,
+                              color: isFavorite
+                                  ? AppColors.appRedColor
+                                  : AppColors.appGreyDarkColor.withAlpha(80),
                             ),
                           )
                         : const Offstage()
                   ],
                 ),
-                !isIconFavoriteActived
+                !isFavoriteIconEnabled
                     ? const SizedBox(
                         height: 4,
                       )
@@ -87,9 +90,10 @@ class ProductCard extends StatelessWidget {
                 Text(
                   "\$${product.price.toString()}",
                   style: const TextStyle(
-                      color: Color(0xFFF37A20),
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
+                    color: AppColors.appOrangeColor,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),

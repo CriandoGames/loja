@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loja/core/shared/injector.dart';
 import 'package:loja/features/home_store/home_store_controller.dart';
+import 'package:loja/features/theme/app_colors.dart';
 import 'package:loja/infra/model/product_model.dart';
 
 class HomeStoreDetails extends StatefulWidget {
@@ -60,7 +61,7 @@ class _HomeStoreDetailsState extends State<HomeStoreDetails> {
               Text(
                 widget._product.name,
                 style: const TextStyle(
-                    color: Color(0xFF37474f),
+                    color: AppColors.appBlackColor,
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0.6),
@@ -72,22 +73,24 @@ class _HomeStoreDetailsState extends State<HomeStoreDetails> {
                   Flexible(
                     child: Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.star,
-                          color: Colors.yellow[600],
+                          color: AppColors.appYellowColor,
                         ),
                         const SizedBox(width: 4),
-                        Text(widget._product.rating.rate.toString(),
-                            style: TextStyle(
-                                color: Colors.grey[600],
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600)),
+                        Text(
+                          widget._product.rating.rate.toString(),
+                          style: TextStyle(
+                              color: AppColors.appGreyDarkColor.withAlpha(60),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600),
+                        ),
                         const SizedBox(width: 4),
                         Flexible(
                           child: Text(
                             "(${widget._product.rating.reviewCount} reviews)",
                             style: TextStyle(
-                                color: Colors.grey[600],
+                                color: AppColors.appGreyDarkColor.withAlpha(65),
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600),
                             overflow: TextOverflow.ellipsis,
@@ -101,7 +104,7 @@ class _HomeStoreDetailsState extends State<HomeStoreDetails> {
                     'R\$ ${widget._product.price.toStringAsFixed(2)}',
                     style: const TextStyle(
                       fontSize: 24,
-                      color: Color(0xFF5EC401),
+                      color: AppColors.appGreenColor,
                       fontWeight: FontWeight.w900,
                     ),
                   ),
@@ -110,18 +113,18 @@ class _HomeStoreDetailsState extends State<HomeStoreDetails> {
               const SizedBox(height: 16),
               Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.notes_outlined,
-                    color: Colors.grey[800],
+                    color: AppColors.appGreyDarkColor,
                   ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       widget._product.category,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
-                        color: Colors.grey[800],
+                        color: AppColors.appGreyDarkColor,
                       ),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
@@ -133,18 +136,18 @@ class _HomeStoreDetailsState extends State<HomeStoreDetails> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.menu_sharp,
-                    color: Colors.grey[800],
+                    color: AppColors.appGreyDarkColor,
                   ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       widget._product.description,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
-                        color: Colors.grey[800],
+                        color: AppColors.appGreyDarkColor,
                       ),
                     ),
                   ),

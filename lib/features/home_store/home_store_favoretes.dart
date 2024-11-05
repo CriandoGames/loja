@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:loja/features/home_store/home_store_controller.dart';
+import 'package:loja/features/theme/app_colors.dart';
 
 import '../../core/shared/injector.dart';
 import 'widgets/product_card.dart';
 
-class HomeStoreFavoretes extends StatefulWidget {
-  const HomeStoreFavoretes({super.key});
+class HomeStoreFavorites extends StatefulWidget {
+  const HomeStoreFavorites({super.key});
 
   @override
-  State<HomeStoreFavoretes> createState() => _HomeStoreFavoretesState();
+  State<HomeStoreFavorites> createState() => _HomeStoreFavoritesState();
 }
 
-class _HomeStoreFavoretesState extends State<HomeStoreFavoretes> {
+class _HomeStoreFavoritesState extends State<HomeStoreFavorites> {
   final controller = injector.get<HomeStoreController>();
 
   @override
@@ -20,11 +21,11 @@ class _HomeStoreFavoretesState extends State<HomeStoreFavoretes> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Text(
+          title: const Text(
             'Favorites',
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: Colors.grey[800],
+              color: AppColors.appGreyDarkColor,
             ),
           ),
         ),
@@ -39,9 +40,11 @@ class _HomeStoreFavoretesState extends State<HomeStoreFavoretes> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ProductCard(
-                      product: product,
-                      controller: controller,
-                      isIconFavoriteActived: false),
+                    product: product,
+                    isFavoriteIconEnabled: false,
+                    isFavorite: controller.isFavorite(product),
+                    toggleFavorite: () => controller.toggleFavorite(product),
+                  ),
                   const SizedBox(
                     height: 10,
                   ),
