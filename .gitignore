@@ -1,0 +1,79 @@
+# Flutter & Dart related
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+build/
+.idea/
+.android/
+.ios/
+.macos/
+web/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# VS Code related
+.vscode/
+*.code-workspace
+
+# Xcode related
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/.symlinks/
+ios/Pods/
+ios/Runner.xcworkspace
+ios/Runner.xcodeproj/project.xcworkspace/
+ios/Runner.xcodeproj/xcuserdata/
+ios/Runner.xcodeproj/project.xcworkspace/xcuserdata/
+ios/Runner.xcworkspace/xcshareddata/
+
+# Android related
+android/app/debug.keystore
+android/app/key.properties
+
+# macOS related
+macos/Flutter/Flutter.podspec
+macos/Flutter/GeneratedPluginRegistrant.swift
+
+# Windows related
+windows/flutter/ephemeral
+windows/Flutter/GeneratedPluginRegistrant.h
+windows/Flutter/GeneratedPluginRegistrant.cpp
+
+# Web related
+web/.firebase/
+web/manifest.json
+web/favicon.png
+
+# Linux related
+linux/flutter/ephemeral
+linux/flutter/GeneratedPluginRegistrant.cc
+
+# Exclude bundling specific Dart files
+**/*.bundle.dart
+
+# Firebase
+firebase.json
+firebase-debug.log
+
+# Generated files
+*.log
+*.tmp
+*.lock
+
+# User specific files
+*.DS_Store
+*.log
+*.swp
+*.swo
+*.gz
+
+# Flutter assets and generated files
+assets/images/resized/
+assets/audio/
